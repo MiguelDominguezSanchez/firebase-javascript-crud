@@ -26,10 +26,12 @@ const app = initializeApp(firebaseConfig)
 const db = getFirestore()
 
 export const saveTask = (title, description) => {
+	// console.log(title, description)
 	addDoc(collection(db, 'tasks'), { title, description })
 }
 
 export const getTasks = () => getDocs(collection(db, 'tasks'))
 
-export const onGetTasks = (callback) =>
-	onSnapshot(collection(db, 'tasks'), callback)
+export const onGetTasks = () => console.log('onGetTasks')
+
+export { onSnapshot, collection, db }

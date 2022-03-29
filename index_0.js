@@ -1,13 +1,18 @@
-import { saveTask, getTasks, onGetTasks } from './firebase.js'
+import { saveTask, getTasks, onSnapshot, collection, db } from './firebase.js'
 
 const taskForm = document.getElementById('task-form')
 const tasksContainer = document.getElementById('task-container')
 
 window.addEventListener('DOMContentLoaded', async () => {
-	onGetTasks((querySnapshot) => {
+	// const querySnapshot = await getTasks()
+	// console.log(querySnapshot)
+
+	onSnapshot(collection(db, 'tasks'), (querySnapshot) => {
 		let html = ''
 
 		querySnapshot.forEach((doc) => {
+			// console.log(doc.data())
+			// console.log(tasksContainer)
 			const task = doc.data()
 			html += `
 				<div>
@@ -26,6 +31,8 @@ taskForm.addEventListener('submit', (e) => {
 
 	const title = taskForm['task-title']
 	const description = taskForm['task-description']
+
+	// console.log(title.value, description.value)
 
 	saveTask(title.value, description.value)
 
